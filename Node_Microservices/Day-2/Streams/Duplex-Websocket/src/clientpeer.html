@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <script src = "/socket.io/socket.io.js"></script>
+        <script>
+            let socket = null;
+            function initialize(){
+                socket = io.connect();
+                socket.on("Msg_From_Server_Peer", dataFromServer => {
+                    console.log("Message from server peer : "+ dataFromServer);
+                });
+            }
+
+            function sendMessage(){
+                let dataToSent = document.querySelector("#txtMessage").value;
+                socket.emit("Msg_From_Client_Peer", dataToSent);
+            }
+        </script>
+    </head>
+<body onload="initialize()">
+
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+
+<label>
+    Message :
+    <input type="text" id="txtMessage" />
+    <input type="button" value="Send" onclick="sendMessage()" />
+</label>
+
+</body>
+</html>
+

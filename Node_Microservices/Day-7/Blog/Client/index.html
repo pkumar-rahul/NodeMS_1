@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0-beta1/css/bootstrap.min.css"
+    />
+    <script>
+        function AddNewPost(e) {
+            e.preventDefault();
+            let newPostTitle = document.querySelector("#txtNewPostTitle").value;
+            fetch("http://localhost:4000/posts", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ title: newPostTitle }),
+            })
+            .then(res => res.json())
+            .then(newPost => console.log(newPost));
+        }
+
+        async function FetchPosts() {
+            let res = await fetch("http://localhost:4000/posts");
+            let posts = await res.json();
+            console.log(posts);
+            //DisplayPosts(Object.values(posts));
+        }
+
+    </script>
+  </head>
+  <body class="container">
+    <form>
+      <label for="txtNewPostTitle">Title :</label>
+
+      <input type="text" id="txtNewPostTitle" />
+
+      <button class="btn btn-primary" onclick="AddNewPost(event)">
+        Add Post
+      </button>
+    </form>
+
+    <hr />
+    <button class="btn btn-primary" onclick="FetchPosts()">
+      Get All Posts !
+    </button>
+    <hr />
+    <div class="postList"></div>
+  </body>
+</html>

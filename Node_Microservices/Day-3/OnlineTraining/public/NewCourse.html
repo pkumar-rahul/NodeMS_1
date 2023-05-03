@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap.min.css"
+    />
+
+    <script>
+      function AddNewCourse(e) {
+        e.preventDefault();
+        fetch("http://localhost:3000/courses/newcourse", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: document.querySelector("#txtCourseId").value,
+            title: document.querySelector("#txtCourseTitle").value,
+          }),
+        })
+          .then(res => res.json())
+          .then(message => {
+            if (message.msg == "success") {
+              window.location = "/"; // reload the page
+            }
+          }); // POST
+      }
+    </script>
+  </head>
+  <body class="container">
+    <header>
+      <h1>New Course</h1>
+    </header>
+    <div class="row justify-content-md-center m-4">
+      <form
+        onsubmit="AddNewCourse(event)"
+        class="col-md-6 alert alert-secondary"
+      >
+        <label>
+          Id:
+          <input type="text" id="txtCourseId" class="form-control" />
+        </label>
+        <label>
+          Title:
+          <input type="text" id="txtCourseTitle" class="form-control" />
+        </label>
+        <button class="btn btn-success my-2">Add New Course</button>
+      </form>
+    </div>
+  </body>
+</html>
